@@ -11,11 +11,11 @@ const UserSchema = new mongoose.Schema({
         unique: true,
         required: true
     },
-    password: {
-        type: String,
-        required: true,
-        minlength: 6
-    },
+    // password: { ---> We don't have validation per users yet <---
+    //     type: String,
+    //     required: true,
+    //     minlength: 6
+    // },
     tasks: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Task'

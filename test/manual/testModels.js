@@ -8,14 +8,14 @@ const run = async () => {
   try {
     await connectDB();
 
-    // Crear una tarea de prueba
+    // Create a test task
     const task = await Task.create({
       name: "Aprender mongoose",
       duration: 60,
       priority: "High",
     });
 
-    // Crear un usuario de prueba con esa tarea
+    // Create a user with that task
     const user = await User.create({
       name: "Juan Pérez",
       email: "juan@example.com",
@@ -23,10 +23,10 @@ const run = async () => {
       tasks: [task._id],
     });
 
-    console.log("✅ Tarea creada:", task);
-    console.log("✅ Usuario creado:", user);
+    console.log("✅ Task created:", task);
+    console.log("✅ User created:", user);
 
-    await mongoose.connection.close(); // Cierra conexión
+    await mongoose.connection.close();
   } catch (error) {
     console.error("❌ Error durante el test:", error.message);
   }

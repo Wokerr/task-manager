@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Task = require('../models/Task');
+const Task = require('../models/TaskModel');
 require('dotenv').config({ path: '.env.test' });
 
 beforeAll(async () => {
