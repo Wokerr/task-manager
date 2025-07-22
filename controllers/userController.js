@@ -18,15 +18,30 @@ exports.addUser = async (req, res) => {
             data: newUser
         });
     } catch (error) {
-        return res.status(500).json({ message: 'Failed to create user' });
+        return res.status(500).json({
+            message: 'Failed to create user',
+            data: {
+                name: 'Name must be a String',
+                email: 'Invalid email format'
+            }
+        });
     }
 };
 
 exports.getAllUsers = async (req, res) => {
     try {
         const users = await User.find();
-        return res.status(200).json({ message: 'Users fetched', data: users });
+
+        if (users.length === 0) {
+            return res.status(200).json({
+                message: 'Not users found',
+                data: users
+            });
+        } return res.status(200).json({
+            message: 'Users fetched',
+            data: users
+        });
     } catch (error) {
-        res.status(500).json({ message: 'Error fetching users', error})
+        res.status(500).json({ message: 'Error fetching users', error: error.message });
     }
-}
+};

@@ -86,6 +86,19 @@ describe('User API', () => {
         expect(res.body.data).toHaveProperty('name', 'Woker');
     });
 
+    it('Should fail due to incorrect type of input', async () => {
+        const res = await request(app)
+            .post('/users')
+            .send({ name: '', email: 'wokerexample.com', tasks: [] });
+        
+        expect(res.statusCode).toBe(400);
+        expect(Array.isArray(res.body.errors)).toBe(true);
+        const nameErrors = res.body.errors.filter(err => err.path === 'name');
+        expect(nameErrors).toBeDefined();
+        const emailError = res.body.errors.find(err => err.path === 'email');
+        expect(emailError).toBeDefined();
+    });
+
     // Route Test - Get user
 
     it('Should get all users', async () => {
@@ -94,10 +107,17 @@ describe('User API', () => {
         { name: 'Carlos', email: 'Carlos@example.com', tasks: [] }
     ]);
 
+        const res = await request(app).get('/users');
+        expect(res.statusCode).toBe(200);
+        expect(res.body.data.length).toBeGreaterThanOrEqual(2);
+        });
+
+    it('Should return an empty array if there are no users', async () => {
     const res = await request(app).get('/users');
-    
-    expect(res.statusCode).toBe(200);
-    expect(res.body.data.length).toBeGreaterThanOrEqual(2);
-});
+
+        expect(res.statusCode).toBe(200);
+        expect(Array.isArray(res.body.data)).toBe(true);
+        expect(res.body.data.length).toBe(0);
+    });
 
 })
