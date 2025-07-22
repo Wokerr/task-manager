@@ -5,6 +5,7 @@ const { userValidationRules } = require('../validations/userValidation');
 
 router.post('/users', userValidationRules, userController.addUser);
 router.get('/users', userValidationRules, userController.getAllUsers);
+router.delete(`/users/:id`, userValidationRules, userController.deleteUser);
 
 
 module.exports = router;

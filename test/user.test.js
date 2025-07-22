@@ -120,4 +120,29 @@ describe('User API', () => {
         expect(res.body.data.length).toBe(0);
     });
 
+    // Route Test - Delete user
+
+    it('Should delete a user by Id', async () => {
+        const createUser = await request(app)
+            .post('/users')
+            .send({
+                name: 'Woker',
+                email: 'woker@example.com',
+                tasks:[]
+            })
+        
+        console.log(createUser.body);
+        
+        expect(createUser.statusCode).toBe(201);
+        const userId = createUser.body.data._id;
+        const userEmail = createUser.body.data.email;
+
+        const deleteUser = await request(app).delete(`/users/${userId}`);
+        
+        expect(deleteUser.statusCode).toBe(200);
+        console.log(deleteUser.body);
+
+        expect(deleteUser.body.data).toHaveProperty('email', userEmail);
+        expect(deleteUser.body.data).toHaveProperty('_id', userId);
+    }) 
 })

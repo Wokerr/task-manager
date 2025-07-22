@@ -20,10 +20,7 @@ exports.addUser = async (req, res) => {
     } catch (error) {
         return res.status(500).json({
             message: 'Failed to create user',
-            data: {
-                name: 'Name must be a String',
-                email: 'Invalid email format'
-            }
+            data: error.message
         });
     }
 };
@@ -45,3 +42,24 @@ exports.getAllUsers = async (req, res) => {
         res.status(500).json({ message: 'Error fetching users', error: error.message });
     }
 };
+
+exports.deleteUser = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const deletedUser = await User.findOneAndDelete(id);
+
+        if (!deletedUser) {
+            return res.status(404).json({ message: 'User not found' })
+        }
+        return res.status(200).json({
+            message: 'User deleted successfully',
+            data: deletedUser
+        });
+    } catch (error) {
+        return res.status(500).json({
+            message: 'server error',
+            error
+        });
+    }
+
+}
