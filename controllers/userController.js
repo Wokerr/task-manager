@@ -1,6 +1,8 @@
 const { body, validationResult } = require('express-validator');
 const User = require('../models/UserModel');
 
+    // Create new User
+
 exports.addUser = async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -25,6 +27,8 @@ exports.addUser = async (req, res) => {
     }
 };
 
+    // Return all Users
+
 exports.getAllUsers = async (req, res) => {
     try {
         const users = await User.find();
@@ -42,6 +46,8 @@ exports.getAllUsers = async (req, res) => {
         res.status(500).json({ message: 'Error fetching users', error: error.message });
     }
 };
+
+    // Delete User by ID
 
 exports.deleteUser = async (req, res) => {
     const { id } = req.params;
@@ -62,4 +68,30 @@ exports.deleteUser = async (req, res) => {
         });
     }
 
+}
+
+ // Update User information by ID
+
+exports.updateUser = async (req, res) => {
+    const { id } = req.params;
+    const updateFields = req.body;
+    
+    try {
+    const updatedUser = await User.findByIdAndUpdate(id, updateFields, {
+      new: true,
+      runValidators: true
+    });
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.status(200).json({
+      message: 'User updated successfully',
+      user: updatedUser
+    });
+
+  } catch (error) {
+    res.status(500).json({ error: 'Server error', details: error.message });
+  }    
 }

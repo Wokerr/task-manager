@@ -1,6 +1,8 @@
 const { body } = require('express-validator');
 const User = require('../models/UserModel');
 
+// Validation used to Create user
+
 const userValidationRules = [
     body('name')
         .trim()
@@ -23,4 +25,28 @@ const userValidationRules = [
         .notEmpty().withMessage('Task cannot be empty')
 ];
 
-module.exports = { userValidationRules };
+    // Validation used to Update User // Middlewares
+    
+function validateUserUpdate(req, res, next) {
+    const { name, email } = req.body;
+
+    if (!name && !email) {
+        return res.status(400).json({ error: 'At least one field must be provided.' });
+    }
+
+    if (name && (typeof name !== 'string' || name.trim() === '')) {
+        delete req.body.name;
+    }
+
+    if (email && (typeof email !== 'string' || email.trim() === '')) {
+        delete req.body.email;
+    }
+
+    next();
+}
+
+
+module.exports = {
+    userValidationRules,
+    validateUserUpdate
+};

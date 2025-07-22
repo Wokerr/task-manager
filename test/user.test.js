@@ -128,21 +128,16 @@ describe('User API', () => {
             .send({
                 name: 'Woker',
                 email: 'woker@example.com',
-                tasks:[]
+                tasks: []
             })
-        
-        console.log(createUser.body);
-        
+                
         expect(createUser.statusCode).toBe(201);
         const userId = createUser.body.data._id;
         const userEmail = createUser.body.data.email;
-
         const deleteUser = await request(app).delete(`/users/${userId}`);
         
         expect(deleteUser.statusCode).toBe(200);
-        console.log(deleteUser.body);
-
         expect(deleteUser.body.data).toHaveProperty('email', userEmail);
         expect(deleteUser.body.data).toHaveProperty('_id', userId);
-    }) 
+    });
 })
