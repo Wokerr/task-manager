@@ -38,8 +38,17 @@ function validateUserUpdate(req, res, next) {
         delete req.body.name;
     }
 
-    if (email && (typeof email !== 'string' || email.trim() === '')) {
-        delete req.body.email;
+    if (email !== undefined) {
+        if (typeof email !== 'string' || email.trim() === '') {
+            
+            delete req.body.email;
+        } else if (!email.includes('@') || !email.includes('.')) {
+            
+            return res.status(400).json({
+                error: 'The email is an invalid or empty input because it wasn’t updated.',
+                data: req.body
+            });
+        }
     }
 
     next();

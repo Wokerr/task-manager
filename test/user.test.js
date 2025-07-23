@@ -140,4 +140,20 @@ describe('User API', () => {
         expect(deleteUser.body.data).toHaveProperty('email', userEmail);
         expect(deleteUser.body.data).toHaveProperty('_id', userId);
     });
+
+    // Route Test - Update user
+
+    it('Should successfully update the user name', async () => {
+        const newUser = await request(app)
+            .post('/users')
+            .send({ name: 'woker', email: 'woker@email.com', tasks: [] });
+
+        const res = await request(app)
+            .put(`/users/${newUser.body.data._id}`)
+            .send({ name: 'Emma', email:'' });
+        
+        expect(res.statusCode).toBe(200);
+        expect(res.body.data.name).toBe('Emma');
+        expect(res.body.data.email).toBe('woker@email.com');
+    });
 })
