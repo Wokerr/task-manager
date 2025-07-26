@@ -20,6 +20,7 @@ describe('Task Model', () => {
       name: 'Test Task',
       duration: 5,
       priority: 'High',
+      description: 'Lorem ipsum dolor sit amet consectetur adipiscing elit ut congue parturient.'
     });
     const savedTask = await task.save();
 

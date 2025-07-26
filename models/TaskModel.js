@@ -14,6 +14,12 @@ const TaskSchema = new mongoose.Schema({
         enum: ['High', 'Mid', 'Low'],
         required: true
     },
+    description: {
+        type: String,
+        required: [true, 'Description is required'],
+        minlength: [10, 'Description must be at least 10 characters'],
+        maxlength: [200, 'Description cannot exceed 200 characters']
+    }
 
 }, { timestamps: true });
 
