@@ -156,4 +156,46 @@ describe('User API', () => {
         expect(res.body.data.name).toBe('Emma');
         expect(res.body.data.email).toBe('woker@email.com');
     });
+
+    it('Should successfully update the user email', async () => {
+        const newUser = await request(app)
+            .post('/users')
+            .send({ name: 'woker', email: 'woker@email.com', tasks: [] });
+
+        const res = await request(app)
+            .put(`/users/${newUser.body.data._id}`)
+            .send({name: '', email:'asd@asd.com' });
+        
+        
+        expect(res.statusCode).toBe(200);
+        expect(res.body.data.name).toBe('woker');
+        expect(res.body.data.email).toBe('asd@asd.com');
+    });
+
+    it('Should return error if both fields are invalid or empty', async () => {
+        const newUser = await request(app)
+            .post('/users')
+            .send({ name: 'woker', email: 'woker@email.com', tasks: [] });
+
+        const res = await request(app)
+            .put(`/users/${newUser.body.data._id}`)
+            .send({ name: '', email:'' });
+        
+        expect(res.statusCode).toBe(400);
+        expect(res.body.error).toBeDefined();
+    });
+    it('Should return error if email field is invalid', async () => {
+        const newUser = await request(app)
+            .post('/users')
+            .send({ name: 'woker', email: 'woker@email.com', tasks: [] });
+
+        const res = await request(app)
+            .put(`/users/${newUser.body.data._id}`)
+            .send({ name: '', email: 'asda' });
+        const userInDb = await User.findById(newUser.body.data._id);
+        
+            expect(res.statusCode).toBe(400);
+            expect(res.body.error).toBeDefined();
+            expect(userInDb.email).toBe('woker@email.com'); // Must be the same email when the user was created
+    });
 })

@@ -34,7 +34,7 @@ function validateUserUpdate(req, res, next) {
         return res.status(400).json({ error: 'At least one field must be provided.' });
     }
 
-    if (name && (typeof name !== 'string' || name.trim() === '')) {
+    if (typeof name !== 'string' || name.trim() === '' || !/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/.test(name)) {
         delete req.body.name;
     }
 
