@@ -5,16 +5,16 @@ const Task = require('../models/TaskModel');
 
 exports.createTask = async (req, res) => {
     const errors = validationResult(req);
-    if (!errors.isEmpty) {
+    if (!errors.isEmpty()) {
         return res.status(400).json({
             errors: errors.array()
         });
     }
 
-    const { name, duration, priority, descripcion } = req.body;
+    const { name, duration, priority, description } = req.body;
 
     try {
-        const newTask = await Task.create({ name, duration, priority, descripcion });
+        const newTask = await Task.create({ name, duration, priority, description });
         return res.status(201).json({
             message: 'Task created successfully',
             data: newTask

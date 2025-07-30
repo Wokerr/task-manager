@@ -7,11 +7,11 @@ const TaskSchema = new mongoose.Schema({
     },
     duration: {
         type: Number,
-        min: 5,
+        min: 1,
     },
     priority: {
         type: String,
-        enum: ['High', 'Mid', 'Low'],
+        enum: ['high', 'mid', 'low'],
         required: true
     },
     description: {
