@@ -6,7 +6,7 @@ const taskValidationRules = [
         .trim()
         .notEmpty().withMessage('Task must have a name')
         .matches(/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/).withMessage('Name only must have letters')
-        .isLength({ min: 3, max: 15 }).withMessage('Name cannot have less than 3 or more than 15 letters')
+        .isLength({ min: 3, max: 30 }).withMessage('Name cannot have less than 3 or more than 15 letters')
         .custom(async (name) => {
             const taskBd = await Task.findOne({ name });
             if (taskBd) {

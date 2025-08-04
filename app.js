@@ -1,10 +1,10 @@
 const express = require('express');
 const app = express();
-const userRoutes = require('./routes/userRoute');
+const apiRoutes = require('./routes/routes');
 require('dotenv').config();
 
 app.use(express.json());
-app.use('/', userRoutes);
+app.use('/', apiRoutes);
 
 
 module.exports = app;

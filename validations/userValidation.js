@@ -20,9 +20,9 @@ const userValidationRules = [
             }
             return true;
         }),
-    body('tasks.*')
-        .isString().withMessage('Each task must be a string')
-        .notEmpty().withMessage('Task cannot be empty')
+    // body('tasks.*') // Not necessary
+    //     .isString().withMessage('Each task must be a string')
+    //     .notEmpty().withMessage('Task cannot be empty')
 ];
 
     // Validation used to Update User // Middlewares
