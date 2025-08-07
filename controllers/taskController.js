@@ -1,5 +1,6 @@
 const { body, validationResult } = require('express-validator');
 const Task = require('../models/TaskModel');
+const User = require('../models/UserModel');
 
 // Create new Task
 
@@ -24,5 +25,41 @@ exports.createTask = async (req, res) => {
             message: 'Failed to create task',
             data: error.message
         });
+    }
+}
+
+exports.assignTaskToUser = async (req, res) => {
+    try {
+        const { userId, taskId } = req.body;
+        if (!userId || !taskId) {
+            return res.status(400).json({message: "User ID and Task ID are required." })
+        }
+
+        const user = await User.findById(userId);
+
+        if (!user) {
+            return res.status(400).json({ message: "User not Found" });
+        }
+        
+        const task = await Task.findById(taskId);
+
+        if (!task) {
+            return res.status(400).json({ message: "Task not Found" });
+        }
+
+        const alreadyAssigned = user.tasks.includes(taskId);
+
+        if (alreadyAssigned) {
+            return res.status(400).json({message: 'Task already assigned to this user'});
+        }
+
+        user.tasks.push(taskId);
+
+        task.assignedTo = user._id;
+
+        await user.save();
+        await task.save();
+    } catch {
+
     }
 }

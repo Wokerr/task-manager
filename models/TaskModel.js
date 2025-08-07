@@ -19,7 +19,10 @@ const TaskSchema = new mongoose.Schema({
         required: [true, 'Description is required'],
         minlength: [10, 'Description must be at least 10 characters'],
         maxlength: [200, 'Description cannot exceed 200 characters']
-    }
+    },
+    assignedTo: [
+        
+    ]
 
 }, { timestamps: true });
 
