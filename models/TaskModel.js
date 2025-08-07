@@ -12,7 +12,8 @@ const TaskSchema = new mongoose.Schema({
     priority: {
         type: String,
         enum: ['high', 'mid', 'low'],
-        required: true
+        required: true,
+        set: value => value.toLowerCase()
     },
     description: {
         type: String,
@@ -20,9 +21,10 @@ const TaskSchema = new mongoose.Schema({
         minlength: [10, 'Description must be at least 10 characters'],
         maxlength: [200, 'Description cannot exceed 200 characters']
     },
-    assignedTo: [
-        
-    ]
+    assignedTo: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }
 
 }, { timestamps: true });
 

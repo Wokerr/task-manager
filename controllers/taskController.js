@@ -59,7 +59,10 @@ exports.assignTaskToUser = async (req, res) => {
 
         await user.save();
         await task.save();
-    } catch {
 
+        return res.status(200).json({ message: 'Task assigned successfully' });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Internal server error' });
     }
 }

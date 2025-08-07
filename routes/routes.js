@@ -15,6 +15,7 @@ router.put(`/users/:id`, validateUserUpdate, userController.updateUser);
 // Task Routes
 
 router.post('/tasks', taskValidationRules, taskController.createTask);
+router.post('/tasks/assign', taskController.assignTaskToUser);
 
 
 

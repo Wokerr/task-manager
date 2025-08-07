@@ -41,4 +41,18 @@ describe('Task Model', () => {
     expect(error).toBeInstanceOf(mongoose.Error.ValidationError);
     expect(error.errors.name).toBeDefined();
   });
+
+  // Assigned task test
+
+  it('should convert priority to lowercase automatically', async () => {
+  const task = new Task({
+    name: 'Test Task',
+    duration: 5,
+    priority: 'HIGH',
+    description: 'Lorem ipsum dolor sit amet consectetur adipiscing elit ut congue parturient.'
+  });
+
+  const savedTask = await task.save();
+  expect(savedTask.priority).toBe('high');
+  });
 });
