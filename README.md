@@ -1,73 +1,94 @@
-Task Manager API
-Task Manager API is a backend service designed to centralize the management of users and their assigned tasks. It allows creating, retrieving, updating, and deleting users, as well as assigning specific tasks to them. This project is ideal for individuals or teams that need to track and organize daily responsibilities, especially from the perspective of the person assigning tasks.
+# User & Task Management API
 
-Features
-User Management: Create, retrieve, update, and delete user records.
+A RESTful API built with **Node.js**, **Express**, **MongoDB**, and **Jest** for managing users and tasks, including full CRUD operations and task assignment functionality.
 
-Task Management: Create and assign tasks to specific users.
+---
 
-Error Handling: Validations and error responses are included to ensure data integrity.
+## 🚀 Features
+- Create, read, update, and delete users
+- Create, read, update, and delete tasks
+- Assign tasks to specific users
+- Data validation using middleware
+- Automated tests with **Jest** and **Supertest**
+- MongoDB integration with **Mongoose**
 
-Testing Coverage: Automated tests that validate correct functionality and expected error handling.
+---
 
-Tech Stack
-Node.js
+## 🛠️ Technologies Used
+- **Node.js** - Backend runtime
+- **Express** - Web framework
+- **MongoDB** - NoSQL database
+- **Mongoose** - ODM for MongoDB
+- **Jest** - Testing framework
+- **Supertest** - HTTP assertions
 
-Express.js
+---
 
-MongoDB & Mongoose
+## 📂 Project Structure
+```
+project/
+│── controllers/       # Request handlers
+│── models/            # Mongoose schemas
+│── routes/            # API routes
+│── middlewares/       # Validation and error handling
+│── tests/             # Automated tests
+│── app.js             # Express app setup
+│── server.js          # Server entry point
+```
 
-Jest & Supertest (for testing)
+---
 
-Dotenv (environment variables)
+## ⚙️ Installation
+```bash
+# Clone the repository
+git clone https://github.com/yourusername/user-task-api.git
 
-Installation & Setup
-1. Clone the repository
+# Navigate to the project folder
+cd user-task-api
 
-git clone <https://github.com/Wokerr/task-manager>
-cd task-manager
-
-2. Install dependencies
+# Install dependencies
 npm install
 
-3. Environment Variables
-Create a .env file in the root directory and add:
+# Create a .env file with your environment variables
+MONGO_URI=your_mongo_connection_string
+PORT=3000
 
-MONGODB_URI=<your_database_connection_string>
-MONGODB_URI_TEST=<your_test_database_connection_string>
-NODE_ENV=development
-
-4. Run the server
-Development mode (with nodemon):
-npm run dev
-
-Production mode:
+# Run the server
 npm start
+```
 
-5. Run tests
-npm run test
+---
 
+## 🧪 Running Tests
+```bash
+# Run all tests
+npm test
+```
 
-Endpoints
-User Routes
-POST /users – Create a new user
+---
 
-GET /users – Retrieve all users
+## 📌 API Endpoints
 
-GET /users/:id – Retrieve a single user by ID
+### Users
+| Method | Endpoint         | Description          |
+|--------|-----------------|----------------------|
+| POST   | /users          | Create a new user    |
+| GET    | /users          | Get all users        |
+| GET    | /users/:id      | Get a user by ID     |
+| PUT    | /users/:id      | Update a user        |
+| DELETE | /users/:id      | Delete a user        |
 
-PUT /users/:id – Update a user by ID
+### Tasks
+| Method | Endpoint              | Description                 |
+|--------|----------------------|-----------------------------|
+| POST   | /tasks               | Create a new task           |
+| GET    | /tasks               | Get all tasks               |
+| GET    | /tasks/:id           | Get a task by ID            |
+| PUT    | /tasks/:id           | Update a task               |
+| DELETE | /tasks/:id           | Delete a task               |
+| POST   | /tasks/:id/assign    | Assign task to a user       |
 
-DELETE /users/:id – Delete a user by ID
+---
 
-Task Routes
-POST /tasks – Create a new task
-
-POST /tasks/assign – Assign a task to a user
-
-Testing
-Automated tests cover both successful operations and error scenarios, ensuring stability and predictable behavior.
-
-License
+## 📄 License
 This project is licensed under the MIT License.
-
